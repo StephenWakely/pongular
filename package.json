@@ -1,10 +1,11 @@
 {
-  "author": "Fungus Humungus <fungus.humungus@gmail.com>",
+  "author": "Stephen Wakely <fungus.humungus@gmail.com>",
   "name": "pongular",
   "description": "AngularJS dependency injection ripped out for use on the server.",
   "version": "0.0.1",
   "repository": {
-    "url": ""
+    "type": "git",
+    "url": "https://github.com/FungusHumungus/pongular"
   },
   "main": "./lib/pongular",
   "keywords": [
