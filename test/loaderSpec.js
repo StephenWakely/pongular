@@ -60,13 +60,13 @@ describe('module loader', function() {
   it('should complain of no module', function() {
     expect(function() {
       pongular.module('dontExist');
-    }).toThrow("[$injector:nomod] Module 'dontExist' is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.\nhttp://errors.angularjs.org/\"NG_VERSION_FULL\"/$injector/nomod?p0=dontExist");
+    }).toThrow('[$injector:nomod] Module \'dontExist\' is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.\nhttp://errors.angularjs.org/"NG_VERSION_FULL"/$injector/nomod?p0=dontExist');
   });
 
   it('should complain if a module is called "hasOwnProperty', function() {
     expect(function() {
       pongular.module('hasOwnProperty', []);
-    }).toThrow("[ng:badname] hasOwnProperty is not a valid module name\nhttp://errors.angularjs.org/\"NG_VERSION_FULL\"/ng/badname?p0=module");
+    }).toThrow('[ng:badname] hasOwnProperty is not a valid module name\nhttp://errors.angularjs.org/"NG_VERSION_FULL"/ng/badname?p0=module');
   });
 
   it('should expose `$$minErr` on the `angular` object', function() {
