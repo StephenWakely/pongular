@@ -16,6 +16,13 @@
   "dependencies": {
     "glob": "3.2.7"
   },
+  "devDependencies": {
+    "lodash": "2.4.1",
+    "grunt": "0.4.2",
+    "load-grunt-tasks": "0.3.0",
+    "grunt-jasmine-node": "0.2.1",
+    "grunt-contrib-watch": "0.6.1"
+  },
   "engines": {
     "node": "*"
   },
