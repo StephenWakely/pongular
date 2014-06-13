@@ -21,7 +21,13 @@
     "grunt": "0.4.2",
     "load-grunt-tasks": "0.3.0",
     "grunt-jasmine-node": "0.2.1",
-    "grunt-contrib-watch": "0.6.1"
+    "grunt-contrib-watch": "0.6.1",
+    "coveralls": "2.10.0",
+    "istanbul": "0.2.11"
+  },
+  "scripts": {
+    "test": "jasmine-node test/**/*Spec.js",
+    "coveralls": "istanbul cover jasmine-node test/**/*Spec.js --captureExceptions test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "engines": {
     "node": "*"

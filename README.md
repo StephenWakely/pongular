@@ -1,5 +1,5 @@
-Pongular
-========
+# Pongular
+[![NPM version](https://badge.fury.io/js/pongular.svg)](http://badge.fury.io/js/pongular) [![Build Status](https://travis-ci.org/FungusHumungus/pongular.svg?branch=master)](https://travis-ci.org/FungusHumungus/pongular) [![Coverage Status](https://img.shields.io/coveralls/FungusHumungus/pongular.svg)](https://coveralls.io/r/FungusHumungus/pongular?branch=master) [![Dependency Status](https://david-dm.org/FungusHumungus/pongular.svg)](https://david-dm.org/FungusHumungus/pongular) [![devDependency Status](https://david-dm.org/FungusHumungus/pongular/dev-status.svg)](https://david-dm.org/FungusHumungus/pongular#info=devDependencies)
 
 Pongular is the Angular JS dependency injection module ripped out for use on the server.
 
