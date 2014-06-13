@@ -1,5 +1,5 @@
 # Pongular
-[![Build Status](https://travis-ci.org/chesleybrown/pongular.svg?branch=master)](https://travis-ci.org/chesleybrown/pongular) [![Coverage Status](https://coveralls.io/repos/chesleybrown/pongular/badge.png)](https://coveralls.io/r/chesleybrown/pongular) [![Dependency Status](https://david-dm.org/chesleybrown/pongular.svg)](https://david-dm.org/chesleybrown/pongular) [![devDependency Status](https://david-dm.org/chesleybrown/pongular/dev-status.svg)](https://david-dm.org/chesleybrown/pongular#info=devDependencies)
+[![Build Status](https://travis-ci.org/chesleybrown/pongular.svg?branch=master)](https://travis-ci.org/chesleybrown/pongular) [![Coverage Status](https://img.shields.io/coveralls/chesleybrown/pongular.svg)](https://coveralls.io/r/chesleybrown/pongular?branch=master) [![Dependency Status](https://david-dm.org/chesleybrown/pongular.svg)](https://david-dm.org/chesleybrown/pongular) [![devDependency Status](https://david-dm.org/chesleybrown/pongular/dev-status.svg)](https://david-dm.org/chesleybrown/pongular#info=devDependencies)
 
 Pongular is the Angular JS dependency injection module ripped out for use on the server.
 
