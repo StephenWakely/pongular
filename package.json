@@ -23,6 +23,9 @@
     "grunt-jasmine-node": "0.2.1",
     "grunt-contrib-watch": "0.6.1"
   },
+  "scripts": {
+    "test": "jasmine-node test/**/*Spec.js"
+  },
   "engines": {
     "node": "*"
   },
