@@ -785,4 +785,123 @@ describe('injector', function() {
       }).toThrow("[ng:areq] Argument 'fn' is not a function, got Object\nhttp://errors.angularjs.org/\"NG_VERSION_FULL\"/ng/areq?p0=fn&p1=not%20a%20function%2C%20got%20Object");
     });
   });
+  
+  
+  describe('service instantiation', function() {
+    var $injector;
+
+    beforeEach(function() {
+      $injector = injectorFactory().createInjector([ function($provide) {
+        $provide.value('book', 'moby');
+        $provide.value('author', 'melville');
+      }]);
+    });
+
+
+    function Type(book, author) {
+      this.book = book;
+      this.author = author;
+    }
+    Type.prototype.title = function() {
+      return this.author + ': ' + this.book;
+    };
+
+
+    it('should instantiate object and preserve constructor property and be instanceof', function() {
+      var t = $injector.instantiate(Type);
+      expect(t.book).toEqual('moby');
+      expect(t.author).toEqual('melville');
+      expect(t.title()).toEqual('melville: moby');
+      expect(t instanceof Type).toBe(true);
+    });
+
+
+    it('should instantiate object and preserve constructor property and be instanceof ' +
+        'with the array annotated type', function() {
+      var t = $injector.instantiate(['book', 'author', Type]);
+      expect(t.book).toEqual('moby');
+      expect(t.author).toEqual('melville');
+      expect(t.title()).toEqual('melville: moby');
+      expect(t instanceof Type).toBe(true);
+    });
+
+
+    it('should allow constructor to return different object', function() {
+      var obj = {};
+      var Class = function() {
+        return obj;
+      };
+
+      expect($injector.instantiate(Class)).toBe(obj);
+    });
+
+
+    it('should allow constructor to return a function', function() {
+      var fn = function() {};
+      var Class = function() {
+        return fn;
+      };
+
+      expect($injector.instantiate(Class)).toBe(fn);
+    });
+
+
+    it('should handle constructor exception', function() {
+      expect(function() {
+        $injector.instantiate(function() { throw 'MyError'; });
+      }).toThrow('MyError');
+    });
+
+
+    it('should return instance if constructor returns non-object value', function() {
+      var A = function() {
+        return 10;
+      };
+
+      var B = function() {
+        return 'some-string';
+      };
+
+      var C = function() {
+        return undefined;
+      };
+
+      expect($injector.instantiate(A) instanceof A).toBe(true);
+      expect($injector.instantiate(B) instanceof B).toBe(true);
+      expect($injector.instantiate(C) instanceof C).toBe(true);
+    });
+  });
+  
+  
+  describe('protection modes', function() {
+    it('should prevent provider lookup in app', function() {
+      var  $injector = injectorFactory().createInjector([function($provide) {
+        $provide.value('name', 'angular');
+      }]);
+      expect(function() {
+        $injector.get('nameProvider');
+      }).toThrow("[$injector:unpr] Unknown provider: nameProviderProvider <- nameProvider\nhttp://errors.angularjs.org/\"NG_VERSION_FULL\"/$injector/unpr?p0=nameProviderProvider%20%3C-%20nameProvider");
+    });
+
+
+    it('should prevent provider configuration in app', function() {
+      var  $injector = injectorFactory().createInjector([]);
+      expect(function() {
+        $injector.get('$provide').value('a', 'b');
+      }).toThrow("[$injector:unpr] Unknown provider: $provideProvider <- $provide\nhttp://errors.angularjs.org/\"NG_VERSION_FULL\"/$injector/unpr?p0=%24provideProvider%20%3C-%20%24provide");
+    });
+
+
+    // TODO: when updated to jasmine 2.0, use regex to match error
+    it('should prevent instance lookup in module', function() {
+      function instanceLookupInModule(name) { throw new Error('FAIL'); }
+      expect(function() {
+        injectorFactory().createInjector([function($provide) {
+          $provide.value('name', 'angular');
+        }, instanceLookupInModule]);
+      }).toThrow(
+        ///\[\$injector:unpr] Unknown provider: name/
+      );
+    });
+  });
 });
