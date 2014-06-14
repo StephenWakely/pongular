@@ -679,7 +679,110 @@ describe('injector', function() {
           }]);
         }).toThrow('[$injector:cdep] Circular dependency found: b <- a\nhttp://errors.angularjs.org/"NG_VERSION_FULL"/$injector/cdep?p0=b%20%3C-%20a');
       });
+      
+    });
+  });
+  
+  
+  describe('retrieval', function() {
+    var instance = {name:'angular'};
+    var Instance = function() { this.name = 'angular'; };
 
+    function createInjectorWithValue(instanceName, instance) {
+      return injectorFactory().createInjector([ ['$provide', function(provide) {
+        provide.value(instanceName, instance);
+      }]]);
+    }
+    function createInjectorWithFactory(serviceName, serviceDef) {
+      return injectorFactory().createInjector([ ['$provide', function(provide) {
+        provide.factory(serviceName, serviceDef);
+      }]]);
+    }
+
+
+    it('should retrieve by name', function() {
+      var $injector = createInjectorWithValue('instance', instance);
+      var retrievedInstance = $injector.get('instance');
+      expect(retrievedInstance).toBe(instance);
+    });
+
+
+    it('should cache instance', function() {
+      var $injector = createInjectorWithFactory('instance', function() { return new Instance(); });
+      var instance = $injector.get('instance');
+      expect($injector.get('instance')).toBe(instance);
+      expect($injector.get('instance')).toBe(instance);
+    });
+
+
+    it('should call functions and infer arguments', function() {
+      var $injector = createInjectorWithValue('instance', instance);
+      expect($injector.invoke(function(instance) { return instance; })).toBe(instance);
+    });
+
+  });
+  
+  
+  describe('method invoking', function() {
+    var $injector;
+
+    beforeEach(function() {
+      $injector = injectorFactory().createInjector([ function($provide) {
+        $provide.value('book', 'moby');
+        $provide.value('author', 'melville');
+      }]);
+    });
+
+
+    it('should invoke method', function() {
+      expect($injector.invoke(function(book, author) {
+        return author + ':' + book;
+      })).toEqual('melville:moby');
+      expect($injector.invoke(function(book, author) {
+        expect(this).toEqual($injector);
+        return author + ':' + book;
+      }, $injector)).toEqual('melville:moby');
+    });
+
+
+    it('should invoke method with locals', function() {
+      expect($injector.invoke(function(book, author) {
+        return author + ':' + book;
+      })).toEqual('melville:moby');
+      expect($injector.invoke(
+        function(book, author, chapter) {
+          expect(this).toEqual($injector);
+          return author + ':' + book + '-' + chapter;
+        }, $injector, {author:'m', chapter:'ch1'})).toEqual('m:moby-ch1');
+    });
+
+
+    it('should invoke method which is annotated', function() {
+      expect($injector.invoke(_.extend(function(b, a) {
+        return a + ':' + b;
+      }, {$inject:['book', 'author']}))).toEqual('melville:moby');
+      expect($injector.invoke(_.extend(function(b, a) {
+        expect(this).toEqual($injector);
+        return a + ':' + b;
+      }, {$inject:['book', 'author']}), $injector)).toEqual('melville:moby');
+    });
+
+
+    it('should invoke method which is an array of annotation', function() {
+      expect($injector.invoke(function(book, author) {
+        return author + ':' + book;
+      })).toEqual('melville:moby');
+      expect($injector.invoke(function(book, author) {
+        expect(this).toEqual($injector);
+        return author + ':' + book;
+      }, $injector)).toEqual('melville:moby');
+    });
+
+
+    it('should throw usefull error on wrong argument type]', function() {
+      expect(function() {
+        $injector.invoke({});
+      }).toThrow("[ng:areq] Argument 'fn' is not a function, got Object\nhttp://errors.angularjs.org/\"NG_VERSION_FULL\"/ng/areq?p0=fn&p1=not%20a%20function%2C%20got%20Object");
     });
   });
 });
