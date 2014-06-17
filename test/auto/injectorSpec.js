@@ -3,9 +3,13 @@
 function valueFn(value) {return function() {return value;};}
 function noop() {};
 
-var mocks = require('../../lib/pongular-mocks');
-var _ = require('lodash');
-var injectorFactory = require('../../lib/injector');
+var pongular = require('../../lib/pongular').pongular,
+    mocks = require('../../lib/pongular-mocks'),
+    _ = require('lodash'),
+    loader = require('../../loader'),
+    injectorFactory = function() {
+        return require('../../lib/injector')(loader.setupModuleLoader(pongular));
+    }
 
 describe('injector', function() {
   var providers;
@@ -244,6 +248,7 @@ describe('injector', function() {
   
   
   describe('module', function() {
+
     it('should provide $injector even when no module is requested', function() {
       var $provide,
         $injector = injectorFactory().createInjector([
@@ -275,9 +280,9 @@ describe('injector', function() {
     });
 
 
-    xit('should run symbolic modules', function() {
-      angularModule('myModule', []).value('a', 'abc');
-      var $injector = createInjector(['myModule']);
+    it('should run symbolic modules', function() {
+      mocks.module('myModule', []).value('a', 'abc');
+      var $injector = injectorFactory().createInjector(['myModule']);
       expect($injector.get('a')).toEqual('abc');
     });
 
@@ -291,17 +296,23 @@ describe('injector', function() {
       );
     });
 
+    it('should load a module', function() {
+        debugger;
+      pongular.module('mod', []);
+      pongular.injector(['mod']);
+    });
 
-    xit('should load dependant modules only once', function() {
+    it('should load dependant modules only once', function() {
       var log = '';
-      mocks.module('a', [], function(){ log += 'a'; });
-      mocks.module('b', ['a'], function(){ log += 'b'; });
-      mocks.module('c', ['a', 'b'], function(){ log += 'c'; });
-      injectorFactory().createInjector(['c', 'c']);
+      pongular.module('a', [], function(){ log += 'a'; });
+      pongular.module('b', ['a'], function(){ log += 'b'; });
+      pongular.module('c', ['a', 'b'], function(){ log += 'c'; });
+      //injectorFactory().createInjector(['c', 'c']);
+      pongular.injector(['c', 'c']);
       expect(log).toEqual('abc');
     });
 
-    xit('should execute runBlocks after injector creation', function() {
+    it('should execute runBlocks after injector creation', function() {
       var log = '';
       mocks.module('a', [], function(){ log += 'a'; }).run(function() { log += 'A'; });
       mocks.module('b', ['a'], function(){ log += 'b'; }).run(function() { log += 'B'; });
@@ -313,7 +324,7 @@ describe('injector', function() {
       expect(log).toEqual('abABCD');
     });
 
-    xit('should execute own config blocks after all own providers are invoked', function() {
+    it('should execute own config blocks after all own providers are invoked', function() {
       var log = '';
       mocks.module('a', ['b'])
       .config(function($aProvider) {
@@ -630,7 +641,7 @@ describe('injector', function() {
       });
 
       // TODO: when updated to jasmine 2.0, use regex to match error
-      xit('should decorate the missing service error with module name', function() {
+      it('should decorate the missing service error with module name', function() {
         mocks.module('TestModule', [], function(xyzzy) {});
         expect(function() {
           injectorFactory().createInjector(['TestModule' ]);
