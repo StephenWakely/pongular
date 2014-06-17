@@ -297,7 +297,6 @@ describe('injector', function() {
     });
 
     it('should load a module', function() {
-        debugger;
       pongular.module('mod', []);
       pongular.injector(['mod']);
     });
@@ -307,7 +306,6 @@ describe('injector', function() {
       pongular.module('a', [], function(){ log += 'a'; });
       pongular.module('b', ['a'], function(){ log += 'b'; });
       pongular.module('c', ['a', 'b'], function(){ log += 'c'; });
-      //injectorFactory().createInjector(['c', 'c']);
       pongular.injector(['c', 'c']);
       expect(log).toEqual('abc');
     });
