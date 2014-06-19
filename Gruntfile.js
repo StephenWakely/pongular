@@ -16,12 +16,13 @@ module.exports = function(grunt) {
 		},
 		watch: {
 			test: {
-				files: ['lib/**/*.js', 'test/**/*Spec.js'],
+				files: ['lib/**/*.js', 'test/**/*Spec.js', 'examples/**/*.js'],
 				tasks: ['jasmine_node:test']
 			}
 		}
 	});
 	
+	grunt.registerTask('ci', ['jasmine_node:test']);
 	grunt.registerTask('test', ['jasmine_node:test', 'watch:test']);
 	grunt.registerTask('default', ['test']);
 };

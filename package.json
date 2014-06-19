@@ -19,6 +19,7 @@
   "devDependencies": {
     "lodash": "2.4.1",
     "grunt": "0.4.2",
+    "grunt-cli": "0.1.13",
     "load-grunt-tasks": "0.3.0",
     "grunt-jasmine-node": "0.2.1",
     "grunt-contrib-watch": "0.6.1",
@@ -26,8 +27,9 @@
     "istanbul": "0.2.11"
   },
   "scripts": {
-    "test": "jasmine-node test/**/*Spec.js",
-    "coveralls": "istanbul cover jasmine-node test/**/*Spec.js --captureExceptions test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "test": "./node_modules/grunt-cli/bin/grunt ci",
+    "coverage": "istanbul cover jasmine-node test/**/*Spec.js --captureExceptions test",
+    "coveralls": "npm run-script coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "engines": {
     "node": "*"
