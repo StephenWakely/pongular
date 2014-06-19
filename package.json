@@ -28,7 +28,7 @@
   },
   "scripts": {
     "test": "./node_modules/grunt-cli/bin/grunt ci",
-    "coverage": "istanbul cover jasmine-node test/**/*Spec.js --captureExceptions test",
+    "coverage": "istanbul cover ./node_modules/grunt-jasmine-node/node_modules/.bin/jasmine-node test/**/*Spec.js --captureExceptions test",
     "coveralls": "npm run-script coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "engines": {
