@@ -72,4 +72,41 @@ describe('module loader', function() {
   it('should expose `$$minErr` on the `angular` object', function() {
     expect(pongular.$$minErr).toEqual(jasmine.any(Function));
   });
+  
+  describe('when loading using uses', function() {
+    
+    beforeEach(function() {
+      pongular
+        .module('testmodule', [])
+        .uses('examples/complex/services/**/*.js')
+      ;
+    });
+    
+    it('should load modules from services directory', function() {
+      expect(pongular.module('service.farm')).toBeDefined();
+      expect(pongular.module('service.animal')).toBeDefined();
+    });
+    
+    it('should know modules are defined using internal method', function() {
+      expect(pongular.isModuleDefined('service.farm')).toBeTruthy();
+      expect(pongular.isModuleDefined('service.farm')).toBeTruthy();
+      expect(pongular.isModuleDefined('totally.not.defined')).toBeFalsy();
+    });
+    
+    describe('and when unloading module', function() {
+      
+      beforeEach(function() {
+        pongular
+          .unloadModule('service.farm')
+        ;
+      });
+      
+      it('should no longer have that module', function() {
+        expect(function() {
+          pongular.module('service.farm')
+        }).toThrow('[$injector:nomod] Module \'service.farm\' is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.\nhttp://errors.angularjs.org/"NG_VERSION_FULL"/$injector/nomod?p0=service.farm');
+      });
+    });
+    
+  });
 });
