@@ -22,6 +22,7 @@ module.exports = function(grunt) {
 		}
 	});
 	
+	grunt.registerTask('ci', ['jasmine_node:test']);
 	grunt.registerTask('test', ['jasmine_node:test', 'watch:test']);
 	grunt.registerTask('default', ['test']);
 };
