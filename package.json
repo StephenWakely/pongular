@@ -27,7 +27,8 @@
   },
   "scripts": {
     "test": "jasmine-node test/**/*Spec.js",
-    "coveralls": "istanbul cover jasmine-node test/**/*Spec.js --captureExceptions test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coverage": "istanbul cover jasmine-node test/**/*Spec.js --captureExceptions test",
+    "coveralls": "npm run-script coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "engines": {
     "node": "*"
