@@ -24,7 +24,8 @@
     "grunt-jasmine-node": "0.2.1",
     "grunt-contrib-watch": "0.6.1",
     "coveralls": "2.10.0",
-    "istanbul": "0.2.11"
+    "istanbul": "0.2.11",
+    "grunt-benchmark": "0.2.0"
   },
   "scripts": {
     "test": "./node_modules/grunt-cli/bin/grunt ci",
@@ -34,5 +35,11 @@
   "engines": {
     "node": "*"
   },
+  "files": [
+    "lib",
+    "examples",
+    "LICENSE",
+    "README.md"
+  ],
   "license": "MIT"
 }
