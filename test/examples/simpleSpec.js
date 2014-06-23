@@ -7,7 +7,7 @@ describe('simple example', function() {
 
   beforeEach(function () {
     spyOn(console, 'log');
-    require('../../examples/simple');
+    require('../../examples/simple/index');
   });
 
   it('should load modules', function() {

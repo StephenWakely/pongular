@@ -1,4 +1,4 @@
-var pongular = require('../lib/pongular').pongular;
+var pongular = require('../../lib/pongular').pongular;
 
 var ook = pongular.module('ook', []);
 ook.constant('e', 1.7);

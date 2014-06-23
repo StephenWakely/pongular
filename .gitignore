@@ -11,6 +11,7 @@ pids
 logs
 results
 coverage
+benchmarks/results.csv
 
 npm-debug.log
 node_modules
