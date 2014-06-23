@@ -19,8 +19,7 @@ module.exports = function(grunt) {
 				displayResults: true
 			},
 			bench: {
-				src: ['benchmarks/**/*.bench.js'],
-				dest: 'benchmarks/results.csv'
+				src: ['benchmarks/**/*.bench.js']
 			}
 		},
 		watch: {
