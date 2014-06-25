@@ -1,5 +1,8 @@
 {
   "author": "Stephen Wakely <fungus.humungus@gmail.com>",
+  "contributors": [
+    "Chesley Brown <me@chesleybrown.ca> (http://chesleybrown.ca)"
+  ],
   "name": "pongular",
   "description": "AngularJS dependency injection ripped out for use on the server.",
   "version": "0.0.3",
