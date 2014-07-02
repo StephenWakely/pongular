@@ -5,7 +5,7 @@
   ],
   "name": "pongular",
   "description": "AngularJS dependency injection ripped out for use on the server.",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "contributors": [
     "Chesley Brown <me@chesleybrown.ca> (http://chesleybrown.ca)"
   ],
