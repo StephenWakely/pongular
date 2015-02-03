@@ -30,7 +30,7 @@ module.uses('app/**/*.js',
 
 ```
 
-Setup your modules as you would in Angular. Because some of the module types don't make sense on the server, such as Controller and Directice - they aren't available. The following are :
+Setup your modules as you would in Angular. Because some of the module types don't make sense on the server, such as Controller and Directive - they aren't available. The following are :
 
 - Provider
 - Factory
@@ -131,7 +131,7 @@ pongular.module('themodule').factory('RSSCtrl', function(RSSFeed) {
 
 ## Testing
 
-Of course Dependecy Injection is only mildy useful until you start writing tests for your code. Pongular comes with pongular-mocks (ripped off from angular-mocks).
+Of course Dependecy Injection is only mildly useful until you start writing tests for your code. Pongular comes with pongular-mocks (ripped off from angular-mocks).
 
 In your specs require pongular and pongular-mocks first, and then setup the module before requiring the module under test. An extra method `isModuleDefined` enables you to only setup the module once per test run :
 
