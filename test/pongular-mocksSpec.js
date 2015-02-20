@@ -49,17 +49,35 @@ describe('pongular mocks', function() {
           function testFn() {
 
           }
-          
-          // TODO: test not passing... why?
-          xit('should add hashKey to module function', function() {
+
+          it('should add hashKey to module function', function() {
             module(testFn);
             inject(function () {
               expect(testFn.$$hashKey).toBeDefined();
             });
           });
-          
+
           it('should cleanup hashKey after previous test', function() {
             expect(testFn.$$hashKey).toBeUndefined();
+          });
+        });
+
+        describe('called multiple times', function() {
+          var secondMock = {};
+
+          it('should apply all mocks', function() {
+            module({foo: secondMock});
+            inject(function (service, foo) {
+              expect(service).toEqual(mock);
+              expect(foo).toEqual(secondMock);
+            });
+          });
+
+          it('should override earlier mocks with later ones', function() {
+            module({service: secondMock});
+            inject(function (service) {
+              expect(service).toEqual(secondMock);
+            });
           });
         });
       });
